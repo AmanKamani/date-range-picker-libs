@@ -1,30 +1,30 @@
-import React, { useRef, useState } from 'react'
-import {DateRangePicker, Button} from 'rsuite'
-import "rsuite/dist/rsuite.min.css";    
+import React, { useState } from 'react'
+import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 
 function HomeComponent() {
 
-    const [range, setRange] = useState();
+    const [dateRange, setDateRangeChange] = useState([new Date(), new Date()]);
 
-    const onDateRangeOk = (value) => {
-        const start = new Date(value[0]).toLocaleDateString();
-        const end = new Date(value[1]).toLocaleDateString();
-
-        alert(`start = ${start}\n end = ${end}`)
+    const onDateRangeChange = (value) => {
+        if(value){
+            const start = value[0].toLocaleDateString();
+            const end = value[1].toLocaleDateString();
+        
+            alert(`start = ${start}\n end = ${end}`)
+        }
+        setDateRangeChange(value);
     }
 
-    const dateRangeProps = {
-        showOneCalendar: true,
-        character: ' - ',
-        ranges: [],
-        format: 'MMMM dd, yyyy',
-        onOk: onDateRangeOk,
-        preventOverflow: true
+    const dateRangePickerProps = {
+        format: 'MMMM-dd-yyyy',
+        onChange: onDateRangeChange,
+        value: dateRange
     }
+
 
     return (<>
         <h4>Date Rage Picker - rsuite</h4>
-        <DateRangePicker placeholder="choose date range" {...dateRangeProps}/> <br /> <br />
+        <DateRangePicker {...dateRangePickerProps}/> <br /> <br />
     </>)
 }
 
